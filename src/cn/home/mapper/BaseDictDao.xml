@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.home.mapper.BaseDictDao">
+	<!-- 查询 -->
+	<select id="selectByCode" resultType="BaseDict">
+		select * from base_dict where dict_type_code = #{v}
+	</select>
+	<select id="selectByQueryVo" parameterType="QueryVo" resultType="Customer">
+		select * from customer
+		<where>
+			<if test="custName != null">
+				and cust_name like "%"#{custName}"%"  
+			</if>
+			<if test="custSource != null">
+				and cust_source = #{custSource}
+			</if>
+			<if test="custIndustry != null">
+				and cust_industry = #{custIndustry}
+			</if>
+			<if test="custLevel != null">
+				and cust_level = #{custLevel}
+			</if>
+		</where>
+		limit #{startRow},#{size}
+	</select>
+	<select id="customerCountByQueryVo" resultType="Integer">
+		select count(1) from customer
+		<where>
+			<if test="custName != null">
+				and cust_name like "%"#{custName}"%"  
+			</if>
+			<if test="custSource != null">
+				and cust_source = #{custSource}
+			</if>
+			<if test="custIndustry != null">
+				and cust_industry = #{custIndustry}
+			</if>
+			<if test="custLevel != null">
+				and cust_level = #{custLevel}
+			</if>
+		</where>
+	</select>
+	<!-- 搜索单个customer -->
+	<select id="selectById" parameterType="Integer" resultType="Customer">
+		select * from customer
+		<where>
+		<!-- 这里传入是Integer/String这种类型，需要在dao接口方法定义的参数前面加@Param("id")才能在if标签里读取id -->
+			<if test="id != null">
+				cust_id = #{id}
+			</if>
+		</where>
+	</select>
+	<!-- 保存customer -->
+	<update id="saveCustomer" parameterType="Customer">
+		update customer
+		<set>
+			<if test="cust_name != null">
+				cust_name = #{cust_name},
+			</if>
+			<if test="cust_linkman != null">
+				cust_linkman = #{cust_linkman}
+			</if>
+		</set>
+		<where>
+			cust_id = #{cust_id}
+		</where>
+	</update>
+	
+	<delete id="deleteCustomer">
+		delete from customer where cust_id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration SYSTEM "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<!-- <properties resource="db.properties"/> -->
+	<!-- 别名 包以其子包下所有类   头字母大小都行-->
+	<typeAliases>
+<!-- 		<typeAlias type="com.itheima.mybatis.pojo.User" alias="User"/> -->
+		<package name="cn.home.pojo"/>
+	</typeAliases>
+	
+	
+
+
+</configuration>
